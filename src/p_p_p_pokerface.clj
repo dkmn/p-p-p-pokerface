@@ -1,10 +1,20 @@
 (ns p-p-p-pokerface)
 
+(defn face-card-value [face-rank]
+  "Auxilliary function to map single-digit face card codes to integer rank values"
+  (get { \T 10, \J 11, \Q 12, \K 13, \A 14} face-rank)
+  )
+
 (defn rank [card]
-  nil)
+  "Destructure hand into a first character, the rank, and an ignored second character, the suit"
+  (let [ [fst _] card ]
+    (cond (Character/isDigit fst) (Integer/valueOf (str fst))
+          :else (face-card-value fst))))
 
 (defn suit [card]
-  nil)
+  "Destructure hand into an ignored first character and a second character, the suit"
+  (let [ [_ snd] card ]
+  (str snd)))
 
 (defn pair? [hand]
   nil)
