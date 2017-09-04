@@ -82,5 +82,22 @@
 (defn straight-flush? [hand]
   (and (straight? hand) (flush? hand)))
 
+(defn high-card? [hand]
+  true) ; All hands have a high card.
+
 (defn value [hand]
-  nil)
+  (let [checkers #{[high-card? 0]
+                   [pair? 1]
+                   [two-pairs? 2]
+                   [three-of-a-kind? 3]
+                   [straight? 4]
+                   [flush? 5]
+                   [full-house? 6]
+                   [four-of-a-kind? 7]
+                   [straight-flush? 8]}
+        checker-applied-to-hand (fn [p] ((first p) hand))
+        possible-checker-value-pairs (filter checker-applied-to-hand checkers)
+        possible-values (map second possible-checker-value-pairs)]
+
+    (apply max possible-values)
+    ))
