@@ -95,9 +95,13 @@
                    [full-house? 6]
                    [four-of-a-kind? 7]
                    [straight-flush? 8]}
-        checker-applied-to-hand (fn [p] ((first p) hand))
-        possible-checker-value-pairs (filter checker-applied-to-hand checkers)
+        ; set of vector pairs, boolean function and value
+        apply-first-function-to-hand (fn [p] ((first p) hand))
+        ; helper function to apply the first function to our input hand
+        possible-checker-value-pairs (filter apply-first-function-to-hand checkers)
+        ; filtering the pairs by applying above predicate
         possible-values (map second possible-checker-value-pairs)]
+    ; taking set of included possible values and filtering to values only
 
     (apply max possible-values)
     ))
