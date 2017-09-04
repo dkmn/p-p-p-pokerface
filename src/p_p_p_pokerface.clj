@@ -59,13 +59,28 @@
   (= [2 3] (sorted-hand-rank-frequencies hand)))
 
 (defn two-pairs? [hand]
-  nil)
+  (= [1 2 2] (sorted-hand-rank-frequencies hand)))
+
+(defn sorted-hand-ranks [hand]
+  (sort (map rank hand)))
+
+(defn ranks-sequential-run? [ranks]
+  "Expected input of vector of ranks, sorted, e.g. from sorted-hand-ranks"
+  (= ranks
+     (range (apply min ranks) (+ (apply max ranks) 1) )))
+
+(defn ranks-aces-high [hand]
+  (sorted-hand-ranks hand))
+
+(defn ranks-aces-low [hand]
+  (sort (replace {14 1} (sorted-hand-ranks hand))))
 
 (defn straight? [hand]
-  nil)
+  (or (ranks-sequential-run? (ranks-aces-high hand))
+      (ranks-sequential-run? (ranks-aces-low hand))))
 
 (defn straight-flush? [hand]
-  nil)
+  (and (straight? hand) (flush? hand)))
 
 (defn value [hand]
   nil)
