@@ -16,20 +16,33 @@
   (let [ [_ snd] card ]
   (str snd)))
 
+
+(defn contains-n-ofakind? [hand n]
+  "Extrapolated from the initial work on pair? below"
+  (= n (apply max (vals (frequencies (map rank hand))))))
+
+
 (defn pair? [hand]
-  nil)
+  "From interactive verification:
+  (map rank pair-hand) => (2 2 4 5 7)
+  (frequencies (map rank pair-hand)) => {2 2, 4 1, 5 1, 7 1}
+  (vals (frequencies (map rank pair-hand))) => (2 1 1 1)
+  (max (vals (frequencies (map rank pair-hand)))) => (2 1 1 1)
+  (apply max (vals (frequencies (map rank pair-hand)))) => 2"
+  (= 2 (apply max (vals (frequencies (map rank hand))))))
 
 (defn three-of-a-kind? [hand]
-  nil)
+  (contains-n-ofakind? hand 3))
 
 (defn four-of-a-kind? [hand]
-  nil)
+  (contains-n-ofakind? hand 4))
 
 (defn flush? [hand]
-  nil)
+  "Set of suits for the hand should have one member if all are the same"
+  (= 1 (count (set (map suit hand)))))
 
 (defn full-house? [hand]
-  nil)
+  (= [2 3] (sort (vals (frequencies (map rank hand))))))
 
 (defn two-pairs? [hand]
   nil)
