@@ -41,8 +41,22 @@
   "Set of suits for the hand should have one member if all are the same"
   (= 1 (count (set (map suit hand)))))
 
+(defn sorted-hand-rank-frequencies [hand]
+  "Create a standardized frequency signature for each hand, E.g.
+   (map rank full-house-hand)
+    => (2 5 2 2 5)
+   (frequencies (map rank full-house-hand))
+    => {2 3, 5 2}
+   (second (frequencies (map rank full-house-hand)))
+    => [5 2]
+   (vals (frequencies (map rank full-house-hand)))
+    => (3 2)
+   (sort (vals (frequencies (map rank full-house-hand))))
+    => (2 3)"
+  (sort (vals (frequencies (map rank hand)))))
+
 (defn full-house? [hand]
-  (= [2 3] (sort (vals (frequencies (map rank hand))))))
+  (= [2 3] (sorted-hand-rank-frequencies hand)))
 
 (defn two-pairs? [hand]
   nil)
